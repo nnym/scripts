@@ -1,0 +1,22 @@
+#!/bin/bash
+injectors=(Overwrite Inject Redirect ModifyArg ModifyArgs ModifyVariable ModifyConstant)
+
+for file in $(find -name *Mixin*.java)
+do
+    let files++
+
+    for injection in ${injectors[@]}
+    do
+        let "${injection}+=$(grep @"${injection}" < "${file}" | wc -l)"
+    done
+done
+
+echo "files: ${files}"
+
+for injection in ${injectors[@]}
+do
+    echo "@${injection}: ${!injection}"
+    let total+="${!injection}"
+done
+
+echo "total: ${total}"
