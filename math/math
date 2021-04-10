@@ -1,0 +1,37 @@
+#!node
+const repl = require("repl");
+
+Object.defineProperty(global, "clear", {get: () => console.clear()});
+
+["round", "pow", "sqrt", "cbrt"].forEach(name => global[name] = Math[name]);
+["PI", "E"].forEach(name => global[name.toLowerCase()] = Math[name]);
+
+phi = (1 + sqrt(5)) / 2;
+g = 9.8;
+
+deg = x => x / pi * 180;
+rad = x => x / 180 * pi;
+
+[["cos", "sec"], ["sin", "csc"], ["tan", "cot"]].forEach(pair => {
+    const normal = pair[0];
+    const inverse = pair[1];
+    const arcNormal = `a${normal}`;
+    const arcInverse = `a${inverse}`;
+
+    global[normal] = Math[normal];
+    global[`${normal}d`] = x => Math[normal](rad(x));
+    global[arcNormal] = Math[arcNormal];
+    global[`${arcNormal}d`] = x => deg(Math[arcNormal](x));
+    global[inverse] = x => 1 / Math[normal](x);
+    global[`${inverse}d`] = x => global[inverse](rad(x));
+    global[arcInverse] = x => Math[arcNormal](1 / x);
+    global[`${arcInverse}d`] = x => deg(global[arcInverse](x));
+});
+
+ln = Math.log;
+log = x => ln(x) / ln(10);
+hyp = Math.hypot;
+root = (radicand, degree) => radicand ** (1 / degree);
+
+repl.start({useGlobal: true});
+

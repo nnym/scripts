@@ -1,5 +1,5 @@
 #!/bin/bash
-injectors=(Overwrite Inject Redirect ModifyArg ModifyArgs ModifyVariable ModifyConstant)
+injectors=(Overwrite Inject Redirect ModifyArg ModifyArgs ModifyVariable ModifyConstant Accessor Invoker)
 
 for file in $(find -name *Mixin*.java)
 do
