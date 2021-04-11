@@ -1,7 +1,7 @@
 #!node
 const repl = require("repl");
 
-Object.defineProperty(global, "clear", {get: () => console.clear()});
+Object.defineProperty(global, "clear", {get: console.clear});
 
 ["round", "pow", "sqrt", "cbrt"].forEach(name => global[name] = Math[name]);
 ["PI", "E"].forEach(name => global[name.toLowerCase()] = Math[name]);
