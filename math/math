@@ -13,19 +13,24 @@ deg = x => x / pi * 180;
 rad = x => x / 180 * pi;
 
 [["cos", "sec"], ["sin", "csc"], ["tan", "cot"]].forEach(pair => {
-    const normal = pair[0];
-    const inverse = pair[1];
-    const arcNormal = `a${normal}`;
-    const arcInverse = `a${inverse}`;
+    for (const type of ["", "h"]) {
+        const normal = pair[0] + type;
+        const inverse = pair[1] + type;
+        const arc = "a" + normal;
+        const arcInverse = "a" + inverse;
 
-    global[normal] = Math[normal];
-    global[`${normal}d`] = x => Math[normal](rad(x));
-    global[arcNormal] = Math[arcNormal];
-    global[`${arcNormal}d`] = x => deg(Math[arcNormal](x));
-    global[inverse] = x => 1 / Math[normal](x);
-    global[`${inverse}d`] = x => global[inverse](rad(x));
-    global[arcInverse] = x => Math[arcNormal](1 / x);
-    global[`${arcInverse}d`] = x => deg(global[arcInverse](x));
+        global[normal] = Math[normal];
+        global[arc] = Math[arc];
+        global[inverse] = x => 1 / Math[normal](x);
+        global[arcInverse] = x => Math[arc](1 / x);
+
+        if (type == "") {
+            global[normal + "d"] = x => Math[normal](rad(x));
+            global[arc + "d"] = x => deg(Math[arc](x));
+            global[inverse + "d"] = x => global[inverse](rad(x));
+            global[arcInverse + "d"] = x => deg(global[arcInverse](x));
+        }
+    }
 });
 
 ln = Math.log;
