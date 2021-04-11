@@ -38,21 +38,23 @@ log = x => ln(x) / ln(10);
 hyp = Math.hypot;
 root = (radicand, degree) => radicand ** (1 / degree);
 
-factorial = x => {
-    if (x < 0) {
-        return Number.NEGATIVE_INFINITY;
+permute = (n, r) => {
+    if (n < 0 || r < 0) {
+        return undefined;
     }
 
-    let factorial = 1;
+    let permutations = 1;
 
-    while (x > 0) {
-        factorial *= x--;
+    while (r > 0) {
+        permutations *= n--;
+        r--;
     }
 
-    return factorial;
+    return permutations;
 }
 
-choose = (n, r) => factorial(n) / (factorial(r) * factorial(n - r));
+choose = (n, r) => permute(n, n - r) / factorial(n - r);
+factorial = n => permute(n, n);
 
 repl.start({useGlobal: true});
 
