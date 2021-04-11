@@ -38,5 +38,21 @@ log = x => ln(x) / ln(10);
 hyp = Math.hypot;
 root = (radicand, degree) => radicand ** (1 / degree);
 
+factorial = x => {
+    if (x < 0) {
+        return Number.NEGATIVE_INFINITY;
+    }
+
+    let factorial = 1;
+
+    while (x > 0) {
+        factorial *= x--;
+    }
+
+    return factorial;
+}
+
+choose = (n, r) => factorial(n) / (factorial(r) * factorial(n - r));
+
 repl.start({useGlobal: true});
 
